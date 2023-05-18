@@ -47,7 +47,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/emailservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/emailservice:latest
         ports:
         - containerPort: 8080
         env:
@@ -112,7 +112,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.6.0
+          image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/checkoutservice:latest
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -186,7 +186,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/recommendationservice:latest
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -255,7 +255,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: gcr.io/google-samples/microservices-demo/frontend:v0.6.0
+          image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/frontend:latest
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -362,7 +362,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/paymentservice:latest
         ports:
         - containerPort: 50051
         env:
@@ -426,7 +426,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/productcatalogservice:latest
         ports:
         - containerPort: 3550
         env:
@@ -490,7 +490,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/cartservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/cartservice:latest
         ports:
         - containerPort: 7070
         env:
@@ -582,7 +582,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/loadgenerator:latest
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -625,7 +625,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/currencyservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/currencyservice:latest
         ports:
         - name: grpc
           containerPort: 7000
@@ -689,7 +689,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/shippingservice:latest
         ports:
         - containerPort: 50051
         env:
@@ -819,7 +819,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: gcr.io/google-samples/microservices-demo/adservice:v0.6.0
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/adservice:latest
         ports:
         - containerPort: 9555
         env:

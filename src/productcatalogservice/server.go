@@ -240,6 +240,7 @@ func (p *productCatalog) Watch(req *healthpb.HealthCheckRequest, ws healthpb.Hea
 
 func (p *productCatalog) ListProducts(context.Context, *pb.Empty) (*pb.ListProductsResponse, error) {
 	time.Sleep(extraLatency)
+	log.Info("Got ListProducts Request")
 	return &pb.ListProductsResponse{Products: parseCatalog()}, nil
 }
 
