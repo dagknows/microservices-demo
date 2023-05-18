@@ -34,21 +34,31 @@ class CreditCardError extends Error {
   }
 }
 
+class PaymentGatewayError extends CreditCardError {
+  constructor (reason) {
+    super(`Could not reach payment gateway: ` + reason);
+    logger.error("PaymentGatewayError: " + reason)
+  }
+}
+
 class InvalidCreditCard extends CreditCardError {
   constructor (cardType) {
     super(`Credit card info is invalid`);
+    logger.error("InvalidCreditCardError: " + cardType)
   }
 }
 
 class UnacceptedCreditCard extends CreditCardError {
   constructor (cardType) {
     super(`Sorry, we cannot process ${cardType} credit cards. Only VISA or MasterCard is accepted.`);
+    logger.error("UnacceptedCreditCardError: " + cardType)
   }
 }
 
 class ExpiredCreditCard extends CreditCardError {
   constructor (number, month, year) {
     super(`Your credit card (ending ${number.substr(-4)}) expired on ${month}/${year}`);
+    logger.error("ExpiredCreditCardError: " + number + ", " + month + ", " + year)
   }
 }
 
@@ -61,6 +71,9 @@ class ExpiredCreditCard extends CreditCardError {
 module.exports = function charge (request) {
   const { amount, credit_card: creditCard } = request;
   const cardNumber = creditCard.credit_card_number;
+  if (cardNumber.startsWith("123")) {
+    throw new PaymentGatewayError("Gateway timed out")
+  }
   const cardInfo = cardValidator(cardNumber);
   const {
     card_type: cardType,

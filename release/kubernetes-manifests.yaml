@@ -113,7 +113,7 @@ spec:
                 - ALL
             privileged: false
             readOnlyRootFilesystem: true
-          image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/checkoutservice:latest
+          image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/checkoutservice:0.0.3
           imagePullPolicy: Always
           ports:
           - containerPort: 5050
@@ -366,7 +366,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/paymentservice:latest
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/paymentservice:0.0.5
         imagePullPolicy: Always
         ports:
         - containerPort: 50051

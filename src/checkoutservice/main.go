@@ -286,18 +286,22 @@ func (cs *checkoutService) prepareOrderItemsAndShippingQuoteFromCart(ctx context
 	var out orderPrep
 	cartItems, err := cs.getUserCart(ctx, userID)
 	if err != nil {
+		log.Errorln("CartError: Error getting user's cart: ", err)
 		return out, fmt.Errorf("cart failure: %+v", err)
 	}
 	orderItems, err := cs.prepOrderItems(ctx, cartItems, userCurrency)
 	if err != nil {
+		log.Errorln("OrderError: Error preparing order: ", err)
 		return out, fmt.Errorf("failed to prepare order: %+v", err)
 	}
 	shippingUSD, err := cs.quoteShipping(ctx, address, cartItems)
 	if err != nil {
+		log.Errorln("ShippingError: Error quoting shipping: ", err)
 		return out, fmt.Errorf("shipping quote failure: %+v", err)
 	}
 	shippingPrice, err := cs.convertCurrency(ctx, shippingUSD, userCurrency)
 	if err != nil {
+		log.Errorln("CurrencyError: Error converting currency: ", err)
 		return out, fmt.Errorf("failed to convert shipping cost to currency: %+v", err)
 	}
 
@@ -313,6 +317,7 @@ func (cs *checkoutService) quoteShipping(ctx context.Context, address *pb.Addres
 			Address: address,
 			Items:   items})
 	if err != nil {
+		log.Errorln("ShippingError: Error getting shipping quote - ", err)
 		return nil, fmt.Errorf("failed to get shipping quote: %+v", err)
 	}
 	return shippingQuote.GetCostUsd(), nil
@@ -321,6 +326,7 @@ func (cs *checkoutService) quoteShipping(ctx context.Context, address *pb.Addres
 func (cs *checkoutService) getUserCart(ctx context.Context, userID string) ([]*pb.CartItem, error) {
 	cart, err := pb.NewCartServiceClient(cs.cartSvcConn).GetCart(ctx, &pb.GetCartRequest{UserId: userID})
 	if err != nil {
+		log.Errorln("CartError: Error getting user cart: ", err)
 		return nil, fmt.Errorf("failed to get user cart during checkout: %+v", err)
 	}
 	return cart.GetItems(), nil
@@ -328,6 +334,7 @@ func (cs *checkoutService) getUserCart(ctx context.Context, userID string) ([]*p
 
 func (cs *checkoutService) emptyUserCart(ctx context.Context, userID string) error {
 	if _, err := pb.NewCartServiceClient(cs.cartSvcConn).EmptyCart(ctx, &pb.EmptyCartRequest{UserId: userID}); err != nil {
+		log.Errorln("CartError: Error emptying user cart: ", err)
 		return fmt.Errorf("failed to empty user cart during checkout: %+v", err)
 	}
 	return nil
@@ -340,10 +347,12 @@ func (cs *checkoutService) prepOrderItems(ctx context.Context, items []*pb.CartI
 	for i, item := range items {
 		product, err := cl.GetProduct(ctx, &pb.GetProductRequest{Id: item.GetProductId()})
 		if err != nil {
+			log.Errorln("ProductError: Error getting product details: ", err)
 			return nil, fmt.Errorf("failed to get product #%q", item.GetProductId())
 		}
 		price, err := cs.convertCurrency(ctx, product.GetPriceUsd(), userCurrency)
 		if err != nil {
+			log.Errorln("CurrencyError: Error converting price: ", err)
 			return nil, fmt.Errorf("failed to convert price of %q to %s", item.GetProductId(), userCurrency)
 		}
 		out[i] = &pb.OrderItem{
@@ -358,6 +367,7 @@ func (cs *checkoutService) convertCurrency(ctx context.Context, from *pb.Money, 
 		From:   from,
 		ToCode: toCurrency})
 	if err != nil {
+		log.Errorln("CurrencyError: Error converting currency: ", err)
 		return nil, fmt.Errorf("failed to convert currency: %+v", err)
 	}
 	return result, err
@@ -368,6 +378,7 @@ func (cs *checkoutService) chargeCard(ctx context.Context, amount *pb.Money, pay
 		Amount:     amount,
 		CreditCard: paymentInfo})
 	if err != nil {
+		log.Errorln("PaymentError: Error charging card: ", err)
 		return "", fmt.Errorf("could not charge the card: %+v", err)
 	}
 	return paymentResp.GetTransactionId(), nil
@@ -385,6 +396,7 @@ func (cs *checkoutService) shipOrder(ctx context.Context, address *pb.Address, i
 		Address: address,
 		Items:   items})
 	if err != nil {
+		log.Errorln("ShippingError: Error shipping order: ", err)
 		return "", fmt.Errorf("shipment failed: %+v", err)
 	}
 	return resp.GetTrackingId(), nil
