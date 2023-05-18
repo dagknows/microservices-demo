@@ -48,6 +48,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/emailservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
@@ -113,6 +114,7 @@ spec:
             privileged: false
             readOnlyRootFilesystem: true
           image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/checkoutservice:latest
+          imagePullPolicy: Always
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -187,6 +189,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/recommendationservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -256,6 +259,7 @@ spec:
             privileged: false
             readOnlyRootFilesystem: true
           image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/frontend:latest
+          imagePullPolicy: Always
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -363,6 +367,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/paymentservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 50051
         env:
@@ -426,7 +431,8 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/productcatalogservice:latest
+        image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/productcatalogservice:0.0.4
+        imagePullPolicy: Always
         ports:
         - containerPort: 3550
         env:
@@ -491,6 +497,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/cartservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 7070
         env:
@@ -583,6 +590,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/loadgenerator:latest
+        imagePullPolicy: Always
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -626,6 +634,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/currencyservice:latest
+        imagePullPolicy: Always
         ports:
         - name: grpc
           containerPort: 7000
@@ -690,6 +699,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/shippingservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 50051
         env:
@@ -820,6 +830,7 @@ spec:
           privileged: false
           readOnlyRootFilesystem: true
         image: us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images/adservice:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 9555
         env:
