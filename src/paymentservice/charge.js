@@ -62,6 +62,13 @@ class ExpiredCreditCard extends CreditCardError {
   }
 }
 
+class InvalidExpirationError extends CreditCardError {
+  constructor (message) {
+    super(message);
+    this.code = 400; // Invalid argument error
+  }
+}
+
 /**
  * Verifies the credit card number and (pretend) charges the card.
  *
@@ -91,6 +98,12 @@ module.exports = function charge (request) {
   const currentYear = new Date().getFullYear();
   const { credit_card_expiration_year: year, credit_card_expiration_month: month } = creditCard;
   if ((currentYear * 12 + currentMonth) > (year * 12 + month)) { throw new ExpiredCreditCard(cardNumber.replace('-', ''), month, year); }
+
+  // We want to make sure our cards are not more than 10 years out
+  logger.info(`Card Date: ${year} - ${month}`)
+  if (year > 2023) {
+    throw new InvalidExpirationError("Cards cannot expire after 2033: " + year)
+  }
 
   logger.info(`Transaction processed: ${cardType} ending ${cardNumber.substr(-4)} \
     Amount: ${amount.currency_code}${amount.units}.${amount.nanos}`);

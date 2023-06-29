@@ -1,4 +1,4 @@
-VERSION=0.0.5
+VERSION=0.0.9
 REPO_URL=us-central1-docker.pkg.dev/dagknows-demo-setup/hipster-images
 MAKEFILE_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 # SVC_ROOT=$(shell dirname $(MAKEFILE_DIR))
